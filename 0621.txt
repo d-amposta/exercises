@@ -1,0 +1,116 @@
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. All rights reserved.
+
+C:\Users\Day4>dektop\xampp\mysql\bin\mysql.exe -u root
+The system cannot find the path specified.
+
+C:\Users\Day4>desktop\xampp\mysql\bin\mysql.exe -u root
+ERROR 2003 (HY000): Can't connect to MySQL server on 'localhost' (10061 "Unknown error")
+
+C:\Users\Day4>desktop\xampp\mysql\bin\mysql.exe -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 2
+Server version: 10.1.21-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| musicstore         |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+6 rows in set (0.03 sec)
+
+MariaDB [(none)]> use musicstore;
+Database changed
+MariaDB [musicstore]>show tables;
++----------------------+
+| Tables_in_musicstore |
++----------------------+
+| albums               |
+| artists              |
+| playlists            |
+| songs                |
+| songs_playlists      |
+| users                |
++----------------------+
+6 rows in set (0.00 sec)
+
+MariaDB [musicstore]> describe albums;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name      | varchar(255) | NO   |     | NULL    |                |
+| year      | year(4)      | YES  |     | NULL    |                |
+| artist_id | int(11)      | YES  | MUL | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+4 rows in set (0.13 sec)
+
+MariaDB [musicstore]> describe artists;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(255) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+2 rows in set (0.06 sec)
+
+MariaDB [musicstore]>select * from albums;
++----+-----------+------+-----------+
+| id | name      | year | artist_id |
++----+-----------+------+-----------+
+|  1 | Psy6      | 2012 |         2 |
+|  2 | Trip      | 1996 |         1 |
+|  3 | Lady Gaga | 2016 |         1 |
++----+-----------+------+-----------+
+3 rows in set (0.00 sec)
+
+MariaDB [musicstore]>
+
+COUNT
+
+SELECT COUNT (*) FROM mocie_casts
+WHERE title = 'Star Wars' AND year = 2015;
+
+GROUP BY
+
+SELECT AVG(column), genre FROM songs GROUP BY genre;
+
+HAVING
+
+SELECT AVG(column), genre FROM songs GROUP BY genre HAVING AVG(column) > 300;
+
+SELECT * FROM 'customers' WHERE country = 'Philippines'
+SELECT 'contactFirstName', 'contactLastName' FROM 'customers' WHERE 'customerName' = 'La Rochelle Gifts';
+SELECT 'MSRP' from products WHERE productName = 'The Titanic';
+SELECT * FROM `employees` WHERE `email` = 'jfirrelli@classicmodelcars.com'
+SELECT * FROM `customers` WHERE `state` is NULL
+SELECT products.productName, (orderdetails.quantityOrdered * orderdetails.priceEach) as subtotal FROM `orderdetails` JOIN products on orderdetails.productCode = products.productCode
+SELECT products.productName, SUM(orderdetails.quantityOrdered * orderdetails.priceEach) as subtotal FROM `orderdetails` JOIN products on orderdetails.productCode = products.productCode GROUP BY (productName)
+SELECT `firstName`, `lastName` FROM `employees` INNER JOIN offices ON employees.officeCode = offices.officeCode WHERE offices.city = 'Tokyo'
+SELECT customers.customerName FROM customers INNER JOIN employees on employees.employeeNumber = customers.salesRepEmployeeNumber WHERE employees.firstName = 'Leslie' AND employees.lastName = 'Thompson'
+SELECT products.productName FROM products JOIN orderdetails on products.productCode = orderdetails.productCode JOIN orders on orders.orderNumber = orderdetails.orderNumber JOIN customers on customers.customerNumber = orders.customerNumber WHERE customers.customerName = 'Baane Mini Imports'
+SELECT lastName, firstName FROM `employees` JOIN offices on offices.officeCode = employees.officeCode join customers on customers.country = offices.country WHERE customers.salesRepEmployeeNumber = employees.employeeNumber GROUP BY lastName, firstName
+SELECT firstName, lastName FROM `employees` WHERE reportsTo = '1143'
+SELECT e.firstName, e.lastName FROM employees e JOIN employees m on m.employeeNumber = e.reportsTo WHERE m.lastName = 'Bow' AND m.firstName = 'Anthony'
+SELECT customerName FROM `customers` WHERE customerName NOT LIKE '%a%'
+SELECT * FROM `productlines` WHERE textDescription LIKE '%state of the art%'
+SELECT DISTINCT country from customers ORDER BY country asc
+SELECT DISTINCT status FROM `orders`
+SELECT productName FROM products WHERE MSRP = (SELECT MAX(MSRP) FROM products)
+SELECT COUNT(*) FROM `customers` WHERE country = 'UK'
+SELECT * FROM `orders` JOIN customers on orders.customerNumber = customers.customerNumber GROUP BY customerName order by COUNT(orders.customerNumber) DESC LIMIT 1
+or SELECT customers.customerName, COUNT(*) from customers join orders on (customers.customerNumber = orders.customerNumber) GROUP BY orders.customerNumber HAVING count(*) = (SELECT MAX(cnt) FROM (SELECT count(*) cnt FROM orders GROUP BY customerNumber)x)
+SELECT customerName, SUM(quantityOrdered) from customers JOIN orders on orders.customerNumber = customers.customerNumber JOIN orderdetails on orderdetails.orderNumber = orders.orderNumber GROUP BY orders.customerNumber ORDER BY SUM(quantityOrdered) DESC
+SELECT customers.customerName, format(sum(amount), 2) FROM payments JOIN customers on customers.customerNumber = payments.customerNumber GROUP BY payments.customerNumber ORDER BY SUM(amount) DESC
+SELECT COUNT(productName), products.productLine FROM `products` JOIN productlines on productlines.productLine = products.productLine GROUP BY products.productLine ORDER BY productlines.productLine
+SELECT COUNT(customers.customerName), CONCAT(employees.firstName, " ", employees.lastName) as employees FROM `employees` LEFT JOIN customers on employees.employeeNumber = customers.salesRepEmployeeNumber GROUP BY employees.employeeNumber

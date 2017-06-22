@@ -1,0 +1,79 @@
+CREATE TABLE users (
+id int NOT NULL AUTO_INCREMENT,
+username varchar(255) NOT NULL,
+password varchar(255) NOT NULL,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE artists (
+id int NOT NULL AUTO_INCREMENT,
+name varchar(255) NOT NULL,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE albums (
+id int NOT NULL AUTO_INCREMENT,
+name varchar(255) NOT NULL,
+year YEAR(4),
+artist_id INT,
+PRIMARY KEY (id),
+FOREIGN KEY (artist_id)
+ REFERENCES artists(id)
+);
+
+CREATE TABLE playlists (
+id INT AUTO_INCREMENT NOT NULL,
+date_created TIMESTAMP
+	DEFAULT CURRENT_TIMESTAMP,
+user_id INT,
+PRIMARY KEY (id),
+FOREIGN KEY (user_id)
+	REFERENCES users(id)
+	ON UPDATE CASCADE
+	ON DELETE SET NULL
+);
+
+CREATE TABLE songs(
+id INT AUTO_INCREMENT NOT NULL,
+title VARCHAR(255) NOT NULL,
+length INT,
+genre VARCHAR(255),
+album_id INT,
+PRIMARY KEY(id),
+FOREIGN KEY(album_id)
+	REFERENCES albums(id)
+	ON UPDATE CASCADE
+	ON DELETE SET NULL
+);
+
+CREATE TABLE songs_playlists (
+id INT AUTO_INCREMENT NOT NULL,
+song_id INT,
+playlist_id INT,
+PRIMARY KEY (id),
+FOREIGN KEY (song_id)
+	REFERENCES songs(id)
+	ON UPDATE CASCADE
+	ON DELETE SET NULL,
+FOREIGN KEY (playlist_id)
+	REFERENCES playlists(id)
+	ON UPDATE CASCADE
+	ON DELETE SET NULL
+);
+
+INSERT INTO artists(name)
+VALUES ('Rivermaya');
+
+or
+
+INSERT INTO artists(name)
+VALUES ('Rivermaya'), ('Psy');
+
+SELECT * FROM artists;
+
+INSERT INTO albums(name, year, artist_id)
+VALUES ('Psy6', 2012, 2), ('Trip', 1996, 1);
+
+DELETE FROM songs WHERE genre = 'OPM' AND length > 240
+
+FROM songs JOIN 
