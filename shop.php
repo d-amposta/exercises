@@ -10,7 +10,7 @@
 		echo '<div class="col s12 m10 l10 main">';
 		
 		require_once('connection.php');
-		$sql = "SELECT productName, description, type, price, img FROM items";
+		$sql = "SELECT * FROM items";
 
 		$result = mysqli_query($conn,$sql);
 
@@ -19,16 +19,15 @@
 				extract($row);
 				
 
-				
+					$id = $row['id'];
 					$name = $row['productName']; 
 					$description = $row['description'];
 					$price = $row['price'];
 					$image = $row['img'];
 					$category = $row['type'];
 
-					if(!isset($_POST['submit']) || 
-						$_POST['type'] == $category || 
-						$_POST['type'] == 'All'){
+
+
 						echo "<div class='row'>";
 						echo "
 						<div class='col l12'>
@@ -37,10 +36,13 @@
 						$description<br>
 						$category<br>
 						$price<br>
-						</div>";
-					}
+						</div>
+						<a href='edit.php?id=$id'><button>Edit</button></a>
+						<a href='delete.php?id=$id'><button>Delete</button></a>";
+						
 					
 			}
+			echo '<a href="additem.php"><div>Add Item</div></a>';
 		}
 
 

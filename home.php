@@ -12,63 +12,9 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <style type="text/css">
-    /*body{
-    	position: relative;
-    }
-    .sidebar {
-    	border-right: 1px solid black;
-    }
-
-    nav, footer {
-    	background-color: #232f3e;
-    }
-
-    .back-to-top,
-    .main-header {
-    	text-align: center;
-    }
-
-    footer,
-    footer a {
-    	color: white;
-    }
-
-
-    .main, .sidebar {
-    	height: 900px;
-    }
-
-    .banner img {
-    	width: 100%;
-    	margin: auto;
-    }
-    h1 {
-    	font-size: 1em;
-    }
-
-    select{
-    	display: block;
-    }
-
-    .main-content div img {
-    	width: 100%;
-    }
-
-    img {
-    	width: 100px;
-    }
-
-    @media only screen and (max-width: 600px) {
-    	.sidebar {
-    		display: hidden;
-    		height: auto;
-    	}
-
-    	.main {
-    		height: auto;
-    	}
-    }*/
-    
+        img{
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -78,16 +24,16 @@
 			<?php require_once('partials/nav.php'); ?>
 	</header>
 
-	<div>
-		<div class="row">
-		<div class="col s12 m2 l2 sidebar">
+	<div class="container">
+		<!-- <div class="row">
+		<div class="col col-s12 col-m2 col-l2 sidebar">
 			<ul>
 				<li><a href="#">Mario</a></li>
 				<li><a href="#">Legend of Zelda</a></li>
 				<li><a href="#">Final Fantasy</a></li>
 				<li><a href="#">Tekken</a></li>
 			</ul>
-		</div>
+		</div> -->
 		<div>
 			<?php display_content(); ?>
 		</div>
@@ -100,8 +46,8 @@
 		<?php require_once('partials/footer.php'); ?>
 	</footer>
 
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
 </body>
 </html>
